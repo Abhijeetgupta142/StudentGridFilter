@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, request
+from flask import Flask, render_template, jsonify, request
 import csv
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 
 def load_students():
@@ -13,19 +13,25 @@ def load_students():
     return students
 
 
+def paginate_students(students, page, page_size):
+    total_students = len(students)
+    start_index = (page - 1) * page_size
+    end_index = start_index + page_size
+    paginated_students = students[start_index:end_index]
+    return paginated_students, total_students
+
+
 @app.route('/students', methods=['GET'])
 def get_students():
     students = load_students()
 
+    # Pagination
     page = int(request.args.get('page', 1))
-    page_size = int(request.args.get('page_size', 5))
+    page_size = int(request.args.get('page_size', 10))
 
-    total_students = len(students)
+    paginated_students, total_students = paginate_students(students, page, page_size)
 
-    start_index = (page - 1) * page_size
-    end_index = start_index + page_size
-    paginated_students = students[start_index:end_index]
-
+    # Filtering
     filter_id = request.args.get('id')
     filter_name = request.args.get('name')
 
@@ -42,6 +48,11 @@ def get_students():
     }
 
     return jsonify(response)
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
 
 
 if __name__ == '__main__':

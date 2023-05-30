@@ -7,8 +7,8 @@ def create_student_csv():
         {'id': 1, 'name': 'Farooq Ansari', 'total_marks': 85},
         {'id': 2, 'name': 'Rohan Singh', 'total_marks': 92},
         {'id': 3, 'name': 'Atanu Sadhu', 'total_marks': 78},
-        {'id': 3, 'name': 'Abhijeet Gupta', 'total_marks': 90},
-        {'id': 3, 'name': 'Anjali Kumari', 'total_marks': 80},
+        {'id': 4, 'name': 'Abhijeet Gupta', 'total_marks': 90},
+        {'id': 5, 'name': 'Anjali Kumari', 'total_marks': 80},
     ]
 
     path = 'student_data.csv'
